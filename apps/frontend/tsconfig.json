@@ -18,13 +18,14 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./",
     "paths": {
-      "@app/*": ["./src/app/*"],
-      "@entities/*": ["./src/entities/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@features/*": ["./src/features/*"],
-      "@widgets/*": ["./src/widgets/*"],
-      "@shared/*": ["./src/shared/*"]
+      "@app/*": ["apps/frontend/src/app/*"],
+      "@entities/*": ["apps/frontend/src/entities/*"],
+      "@pages/*": ["apps/frontend/src/pages/*"],
+      "@features/*": ["apps/frontend/src/features/*"],
+      "@widgets/*": ["apps/frontend/src/widgets/*"],
+      "@shared/*": ["apps/frontend/src/shared/*"]
     }
   },
   "include": [
@@ -33,7 +34,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
-, "tailwind.config.ts", "next.config.mjs", "next.configmjs"  ],
+    "**/*.mts",
+    "tailwind.config.ts",
+    "apps/frontend/next.config.mjs",
+    "next.configmjs"
+  ],
   "exclude": ["node_modules"]
 }

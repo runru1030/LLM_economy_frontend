@@ -1,0 +1,28 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "TURBO=1 next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write",
+    "reporter": "biome check --reporter=summary"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.16",
+    "lodash": "^4.17.21",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.1",
+    "@types/lodash": "^4.17.21",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
+  }
+}

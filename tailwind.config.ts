@@ -3,11 +3,11 @@ import tailwindTypography from "@tailwindcss/typography";
 const config = {
   darkMode: "class",
   content: [
-    "./src/app/**/*.tsx",
-    "./src/features/**/*.tsx",
-    "./src/entities/**/*.tsx",
-    "./src/widgets/**/*.tsx",
-    "./src/shared/**/*.tsx",
+    "./apps/**/src/app/**/*.tsx",
+    "./apps/**/src/features/**/*.tsx",
+    "./apps/**/src/entities/**/*.tsx",
+    "./apps/**/src/widgets/**/*.tsx",
+    "./apps/**/src/shared/**/*.tsx",
   ],
   theme: {
     extend: {
