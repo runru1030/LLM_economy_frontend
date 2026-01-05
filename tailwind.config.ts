@@ -1,7 +1,6 @@
-import { Config } from "tailwindcss";
 import tailwindTypography from "@tailwindcss/typography";
 
-const config: Config = {
+const config = {
   darkMode: "class",
   content: [
     "./src/app/**/*.tsx",
