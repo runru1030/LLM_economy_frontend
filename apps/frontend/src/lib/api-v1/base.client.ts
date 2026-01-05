@@ -52,7 +52,7 @@ export type CustomUseQueryOptions<
         }
       >
     >,
-    "queryFn"
+    "queryFn" | "queryKey"
   >;
 
 export type CustomUseMutationOptions<

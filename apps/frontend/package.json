@@ -13,12 +13,15 @@
     "openapi": "llm-economy-openapi -i http://fastapi-1168064217.us-west-2.elb.amazonaws.com/openapi.json -o src/lib/api-v1"
   },
   "dependencies": {
+    "@llm-economy/openapi": "workspace:*",
     "@tanstack/react-query": "^5.90.16",
+    "date-fns": "^4.1.0",
     "lodash": "^4.17.21",
     "next": "16.1.1",
+    "openapi-fetch": "^0.12.0",
+    "openapi-typescript-helpers": "^0.0.13",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "@llm-economy/openapi": "workspace:*"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.1",
