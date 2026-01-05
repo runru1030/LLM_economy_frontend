@@ -9,14 +9,16 @@
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
-    "reporter": "biome check --reporter=summary"
+    "reporter": "biome check --reporter=summary",
+    "openapi": "llm-economy-openapi -i http://fastapi-1168064217.us-west-2.elb.amazonaws.com/openapi.json -o src/lib/api-v1"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.16",
     "lodash": "^4.17.21",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "@llm-economy/openapi": "workspace:*"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.1",
