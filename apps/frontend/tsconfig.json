@@ -20,12 +20,11 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["apps/frontend/src/app/*"],
-      "@entities/*": ["apps/frontend/src/entities/*"],
-      "@pages/*": ["apps/frontend/src/pages/*"],
-      "@features/*": ["apps/frontend/src/features/*"],
-      "@widgets/*": ["apps/frontend/src/widgets/*"],
-      "@shared/*": ["apps/frontend/src/shared/*"]
+      "@entities/*": ["./src/app/entities/*"],
+      "@pages/*": ["./src/app/pages/*"],
+      "@features/*": ["./src/app/features/*"],
+      "@widgets/*": ["./src/app/widgets/*"],
+      "@shared/*": ["./src/app/shared/*"]
     }
   },
   "include": [
