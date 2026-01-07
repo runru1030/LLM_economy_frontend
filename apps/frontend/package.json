@@ -22,7 +22,8 @@
     "openapi-fetch": "^0.12.0",
     "openapi-typescript-helpers": "^0.0.13",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.1",

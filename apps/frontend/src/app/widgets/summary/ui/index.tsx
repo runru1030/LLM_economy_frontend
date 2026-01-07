@@ -1,27 +1,30 @@
 "use client";
-import { SummaryType } from "@entities/summary/types";
-import { ContentBox, DateBox, KeywordBox, TypeBox } from "@entities/summary/ui";
+import type { SummaryItem } from "@entities/summary/types";
+import {
+  ContentBox,
+  DateBox,
+  KeywordBox,
+  LinkBox,
+  TypeBox,
+} from "@entities/summary/ui";
 import useInView from "@shared/hooks/use-in-view";
+import { SkeletonUI } from "@shared/ui/skeleton";
 import { useEffect } from "react";
 import { useGetInfiniteSummaryList } from "../api";
-import { SkeletonUI } from "@shared/ui/skeleton";
 
 function SummaryItem({
   content,
   keywords,
-  type,
-  createdAt,
-}: {
-  content: string;
-  keywords: string[];
-  type: SummaryType;
-  createdAt: string;
-}) {
+  author,
+  publishedAt,
+  url,
+}: SummaryItem) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-3 items-center">
-        <TypeBox type={type} />
-        <DateBox date={new Date(createdAt)} />
+      <div className="flex gap-2 items-center">
+        <TypeBox>{author}</TypeBox>
+        {url && <LinkBox url={url} />}
+        <DateBox date={new Date(publishedAt)} />
       </div>
       <div className="flex-wrap flex gap-2">
         {keywords.map((k) => (
@@ -74,11 +77,12 @@ function SummaryList() {
         .flatMap((page) => page.summaries)
         .map((summary) => (
           <SummaryItem
+            author={summary.author}
             content={summary.content}
-            createdAt={summary.created_at}
             keywords={summary.keywords}
-            type="MK"
+            publishedAt={summary.published_at}
             key={summary.created_at}
+            url={summary.url}
           />
         ))}
       {isFetching &&

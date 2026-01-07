@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { PropsWithChildren } from "react";
-import { SummaryType } from "../types";
 import { humantime } from "src/app/shared/lib/formatter";
+import { MdLink } from "react-icons/md";
 
 function ContentBox({ children }: PropsWithChildren) {
   return (
@@ -13,11 +14,19 @@ function KeywordBox({ children }: PropsWithChildren) {
   return <div className="text-sm text-gray-500">{`#${children}`}</div>;
 }
 
-function TypeBox({ type }: { type: SummaryType }) {
-  return { MK: <div className="text-sm">매일경제</div> }[type];
+function TypeBox({ children }: PropsWithChildren) {
+  return <span>{children}</span>;
 }
 
 function DateBox({ date }: { date: Date }) {
   return <span className="text-gray-400 text-xs">{humantime(date)}</span>;
 }
-export { ContentBox, KeywordBox, TypeBox, DateBox };
+
+function LinkBox({ url }: { url: string }) {
+  return (
+    <Link href={url} target="_blank">
+      <MdLink className="size-5 text-blue-400 hover:text-blue-600 active:text-blue-600" />
+    </Link>
+  );
+}
+export { ContentBox, KeywordBox, TypeBox, DateBox, LinkBox };
