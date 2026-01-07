@@ -4,6 +4,7 @@ import { ContentBox, DateBox, KeywordBox, TypeBox } from "@entities/summary/ui";
 import useInView from "@shared/hooks/use-in-view";
 import { useEffect } from "react";
 import { useGetInfiniteSummaryList } from "../api";
+import { SkeletonUI } from "@shared/ui/skeleton";
 
 function SummaryItem({
   content,
@@ -32,6 +33,23 @@ function SummaryItem({
   );
 }
 
+function SummarySkeletonItem() {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-3 items-center">
+        <SkeletonUI height="20px" width="50px" />
+        <SkeletonUI height="20px" width="50px" />
+      </div>
+      <div className="flex-wrap flex gap-2">
+        {Array.from({ length: 3 }).map((_, k) => (
+          <SkeletonUI key={k} height="20px" width="80px" />
+        ))}
+      </div>
+      <SkeletonUI height="80px" />
+    </div>
+  );
+}
+
 function SummaryList() {
   const { data, hasNextPage, fetchNextPage, isFetching, isSuccess, error } =
     useGetInfiniteSummaryList({
@@ -51,7 +69,7 @@ function SummaryList() {
   if (isSuccess && data?.pages.length === 0) return <>없어용</>;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full">
       {data?.pages
         .flatMap((page) => page.summaries)
         .map((summary) => (
@@ -62,6 +80,10 @@ function SummaryList() {
             type="MK"
             key={summary.created_at}
           />
+        ))}
+      {isFetching &&
+        Array.from({ length: 10 }).map((_, k) => (
+          <SummarySkeletonItem key={k} />
         ))}
       <div className="min-h-0.5" ref={ref} />
     </div>
