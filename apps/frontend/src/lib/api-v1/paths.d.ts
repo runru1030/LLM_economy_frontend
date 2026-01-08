@@ -24,12 +24,29 @@ export interface components {
         /** CreateSummaryData */
         CreateSummaryData: {
             /**
+             * Title
+             * @default
+             */
+            title: string;
+            /**
+             * Author
+             * @default
+             */
+            author: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /**
              * Content
              * @default
              */
             content: string;
             /** Keywords */
             keywords: string[];
+            /** Published At */
+            published_at: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -40,10 +57,21 @@ export interface components {
         SummaryGetResponse: {
             /** Id */
             id: number;
+            /** Title */
+            title: string;
             /** Content */
             content: string;
             /** Keywords */
             keywords: string[];
+            /** Author */
+            author: string;
+            /** Url */
+            url: string | null;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
             /**
              * Created At
              * Format: date-time
