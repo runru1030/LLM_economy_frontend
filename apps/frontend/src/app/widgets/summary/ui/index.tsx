@@ -56,7 +56,7 @@ function SummarySkeletonItem() {
 function SummaryList() {
   const { data, hasNextPage, fetchNextPage, isFetching, isSuccess, error } =
     useGetInfiniteSummaryList({
-      params: { query: {} },
+      params: {},
     });
 
   const { ref } = useInView({

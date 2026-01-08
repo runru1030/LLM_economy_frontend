@@ -5,7 +5,7 @@ import { MdLink } from "react-icons/md";
 
 function ContentBox({ children }: PropsWithChildren) {
   return (
-    <div className="rounded-sm py-1.5 px-2.5 w-full bg-gray-100">
+    <div className="rounded-sm py-2 px-3 w-full bg-gray-100 leading-6 text-[15px]">
       {children}
     </div>
   );
@@ -15,7 +15,7 @@ function KeywordBox({ children }: PropsWithChildren) {
 }
 
 function TypeBox({ children }: PropsWithChildren) {
-  return <span>{children}</span>;
+  return <span className="text-gray-400 text-sm">{children}</span>;
 }
 
 function DateBox({ date }: { date: Date }) {
