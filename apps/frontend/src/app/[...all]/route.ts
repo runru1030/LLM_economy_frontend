@@ -5,10 +5,6 @@ const PROXY_URL = (process.env.NEXT_PROXY_API_URL || "").replace(/\/+$/, "");
 export const runtime = "nodejs";
 
 async function router(req: NextRequest) {
-  if (process.env.NODE_ENV !== "development") {
-    return new Response("Not Found", { status: 404 });
-  }
-
   req.headers.delete("transfer-encoding");
   req.headers.delete("host");
   req.headers.delete("origin");
