@@ -1,0 +1,10 @@
+.git
+.gitignore
+
+.yarn/*
+
+**/node_modules
+**/.next
+
+.idea
+.vscode
