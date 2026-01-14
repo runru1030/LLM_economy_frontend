@@ -10,10 +10,13 @@ async function router(req: NextRequest) {
   req.headers.delete("origin");
   req.headers.delete("referer");
   req.headers.delete("content-length");
-
+  
+  const path = req.nextUrl.pathname.replace(/^\/api/, "");
+  const search = req.nextUrl.search;
+  const targetUrl = `${PROXY_URL}${path}${search}`;
   const body = req.method !== "GET" ? await req.blob() : ({ size: 0 } as Blob);
 
-  const res = await fetch(req.nextUrl.href.replace(/^http.+\/api/, PROXY_URL), {
+  const res = await fetch(targetUrl, {
     method: req.method,
     body: body.size ? body : undefined,
     headers: req.headers,
