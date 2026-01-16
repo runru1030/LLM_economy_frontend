@@ -1,18 +1,12 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard-dynamic-subset.min.css");
 
 @import "tailwindcss";
+@import "@llm-economy/tailwind";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 body {
   background: var(--background);
