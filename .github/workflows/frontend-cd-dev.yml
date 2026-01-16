@@ -62,6 +62,8 @@ jobs:
           file: "apps/frontend/Dockerfile"
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            ENV_FILE=.env
 
       - name: Download Task Definition Template
         run: |

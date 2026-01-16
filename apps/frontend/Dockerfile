@@ -16,12 +16,15 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 # 빌드
 FROM deps AS build
 
+ARG ENV_FILE
 ENV NODE_ENV="production"
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 
 COPY apps/frontend ./apps/frontend
+RUN cp ./apps/frontend/${ENV_FILE} ./apps/frontend/.env && rm -f ./apps/frontend/.env.*
+
 RUN pnpm --filter ./apps/frontend build
 
 # 실행
