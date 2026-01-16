@@ -9,6 +9,7 @@ WORKDIR /app
 
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
 COPY apps/frontend/package.json apps/frontend/package.json
+COPY packages/tailwind/package.json packages/tailwind/package.json
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
@@ -26,6 +27,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 
 COPY apps/frontend ./apps/frontend
+COPY packages/tailwind ./packages/tailwind
 
 RUN pnpm --filter ./apps/frontend build
 
