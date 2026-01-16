@@ -64,6 +64,7 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             ENV_FILE=.env
+            NEXT_PROXY_API_URL=${{secrets.NEXT_PROXY_API_URL}}
 
       - name: Download Task Definition Template
         run: |
