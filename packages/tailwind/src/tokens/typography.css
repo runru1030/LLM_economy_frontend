@@ -1,0 +1,48 @@
+@theme {
+  /* heading */
+  --heading1-size: 2rem;
+  --heading1-line: 170%;
+
+  --heading2-size: 1.875rem;
+  --heading2-line: 160%;
+
+  --heading3-size: 1.75rem;
+  --heading3-line: 160%;
+
+  /* subheading */
+  --subheading1-size: 1.5rem;
+  --subheading1-line: 160%;
+
+  --subheading2-size: 1.375rem;
+  --subheading2-line: 160%;
+
+  --subheading3-size: 1.25rem;
+  --subheading3-line: 160%;
+
+  /* body */
+  --body1-size: 1.125rem;
+  --body1-line: 155%;
+
+  --body2-size: 1rem;
+  --body2-line: 155%;
+
+  --body3-size: 0.875rem;
+  --body3-line: 150%;
+
+  /* button */
+  --button1-size: 1rem;
+  --button1-line: 160%;
+
+  --button2-size: 0.875rem;
+  --button2-line: 150%;
+
+  --button3-size: 0.813rem;
+  --button3-line: 150%;
+
+  /* caption */
+  --caption1-size: 0.813rem;
+  --caption1-line: 140%;
+
+  --caption2-size: 0.75rem;
+  --caption2-line: 140%;
+}

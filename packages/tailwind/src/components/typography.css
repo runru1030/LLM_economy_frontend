@@ -1,0 +1,153 @@
+@utility heading1-bold {
+  font-size: var(--heading1-size);
+  font-weight: 700;
+  line-height: var(--heading1-line);
+}
+@utility heading1-semibold {
+  font-size: var(--heading1-size);
+  font-weight: 600;
+  line-height: var(--heading1-line);
+}
+
+@utility heading2-bold {
+  font-size: var(--heading2-size);
+  font-weight: 700;
+  line-height: var(--heading2-line);
+}
+@utility heading2-semibold {
+  font-size: var(--heading2-size);
+  font-weight: 600;
+  line-height: var(--heading2-line);
+}
+@utility heading2-medium {
+  font-size: var(--heading2-size);
+  font-weight: 500;
+  line-height: var(--heading2-line);
+}
+
+@utility heading3-bold {
+  font-size: var(--heading3-size);
+  font-weight: 700;
+  line-height: var(--heading3-line);
+}
+@utility heading3-semibold {
+  font-size: var(--heading3-size);
+  font-weight: 600;
+  line-height: var(--heading3-line);
+}
+@utility heading3-medium {
+  font-size: var(--heading3-size);
+  font-weight: 500;
+  line-height: var(--heading3-line);
+}
+
+/* subheading */
+@utility subheading1-bold {
+  font-size: var(--subheading1-size);
+  font-weight: 700;
+  line-height: var(--subheading1-line);
+}
+@utility subheading1-semibold {
+  font-size: var(--subheading1-size);
+  font-weight: 600;
+  line-height: var(--subheading1-line);
+}
+@utility subheading1-medium {
+  font-size: var(--subheading1-size);
+  font-weight: 500;
+  line-height: var(--subheading1-line);
+}
+
+@utility subheading2-semibold {
+  font-size: var(--subheading2-size);
+  font-weight: 600;
+  line-height: var(--subheading2-line);
+}
+@utility subheading2-medium {
+  font-size: var(--subheading2-size);
+  font-weight: 500;
+  line-height: var(--subheading2-line);
+}
+
+@utility subheading3-semibold {
+  font-size: var(--subheading3-size);
+  font-weight: 600;
+  line-height: var(--subheading3-line);
+}
+@utility subheading3-medium {
+  font-size: var(--subheading3-size);
+  font-weight: 500;
+  line-height: var(--subheading3-line);
+}
+
+/* body */
+@utility body1-semibold {
+  font-size: var(--body1-size);
+  font-weight: 600;
+  line-height: var(--body1-line);
+}
+@utility body1-medium {
+  font-size: var(--body1-size);
+  font-weight: 500;
+  line-height: var(--body1-line);
+}
+@utility body1-regular {
+  font-size: var(--body1-size);
+  font-weight: 400;
+  line-height: var(--body1-line);
+}
+
+@utility body2-semibold {
+  font-size: var(--body2-size);
+  font-weight: 600;
+  line-height: var(--body2-line);
+}
+@utility body2-medium {
+  font-size: var(--body2-size);
+  font-weight: 500;
+  line-height: var(--body2-line);
+}
+@utility body2-regular {
+  font-size: var(--body2-size);
+  font-weight: 400;
+  line-height: var(--body2-line);
+}
+
+@utility body3-semibold {
+  font-size: var(--body3-size);
+  font-weight: 600;
+  line-height: var(--body3-line);
+}
+@utility body3-medium {
+  font-size: var(--body3-size);
+  font-weight: 500;
+  line-height: var(--body3-line);
+}
+@utility body3-regular {
+  font-size: var(--body3-size);
+  font-weight: 400;
+  line-height: var(--body3-line);
+}
+
+/* caption */
+@utility caption1-medium {
+  font-size: var(--caption1-size);
+  font-weight: 500;
+  line-height: var(--caption1-line);
+}
+@utility caption1-semibold {
+  font-size: var(--caption1-size);
+  font-weight: 600;
+  line-height: var(--caption1-line);
+}
+
+@utility caption2-medium {
+  font-size: var(--caption2-size);
+  font-weight: 500;
+  line-height: var(--caption2-line);
+}
+@utility caption2-semibold {
+  font-size: var(--caption2-size);
+  font-weight: 600;
+  line-height: var(--caption2-line);
+}

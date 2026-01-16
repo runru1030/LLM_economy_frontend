@@ -1,0 +1,6 @@
+{
+  "name": "@llm-economy/tailwind",
+  "version": "1.0.0",
+  "description": "",
+  "style": "./src/index.css"
+}
