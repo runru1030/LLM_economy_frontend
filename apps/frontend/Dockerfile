@@ -23,7 +23,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 
 COPY apps/frontend ./apps/frontend
-RUN cp ./apps/frontend/${ENV_FILE} ./apps/frontend/.env && rm -f ./apps/frontend/.env.*
 
 RUN pnpm --filter ./apps/frontend build
 
