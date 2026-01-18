@@ -7,6 +7,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import "../global.css"
 
 export const unstable_settings = {
   anchor: "(tabs)",
