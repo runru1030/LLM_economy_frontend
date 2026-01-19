@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <div className="h-15 flex items-center sticky top-0 left-0 px-4 bg-white border-b border-gray-100 mb-5 font-extralight">
+    <div className="h-15 flex items-center sticky top-0 left-0 px-4 bg-white border-b border-gray-100  font-extralight">
       LLM economy
     </div>
   );
@@ -12,9 +12,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="">
+    <main>
       <Header />
-      <div className="px-4 max-w-[480px] mx-auto">{children}</div>
+      <div className="max-w-120 mx-auto h-[calc(100vh-60px)]">{children}</div>
     </main>
   );
 }
