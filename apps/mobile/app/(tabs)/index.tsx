@@ -7,7 +7,7 @@ const windowHeight = Dimensions.get("window").height;
 export default function HomeScreen() {
   return (
     <ThemedView className={clsx("flex-1", `h-[${windowHeight}px]`)}>
-      <WebViewContiner baseURL="http://192.168.10.13:3000/summary" />
+      <WebViewContiner baseURL={`${process.env.WEB_VIEW_ORIGIN}/summary`} />
     </ThemedView>
   );
 }
