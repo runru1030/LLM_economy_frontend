@@ -12,9 +12,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="">
+    <main>
       <Header />
-      <div className="px-4 max-w-[480px] mx-auto">{children}</div>
+      <div className="max-w-120 mx-auto">{children}</div>
     </main>
   );
 }
