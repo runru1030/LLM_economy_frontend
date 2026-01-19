@@ -1,0 +1,58 @@
+import clsx from "clsx";
+import { getMessageContent } from "../lib";
+import { MessageResponse } from "../types";
+import { PropsWithChildren } from "react";
+
+function MessageText({
+  message,
+  className,
+}: {
+  message: MessageResponse;
+  className?: string;
+}) {
+  return (
+    <div className={clsx(className, "px-2 py-1")}>
+      <p className="text-sm break-keep text-gray-800">
+        {getMessageContent(message)}
+      </p>
+    </div>
+  );
+}
+function MessageContainer({
+  className,
+  children,
+}: PropsWithChildren<{
+  className?: string;
+}>) {
+  return (
+    <div className={`flex gap-3 ${className}`}>
+      <div className="max-w-full">{children}</div>
+    </div>
+  );
+}
+function AIMessage({ message }: { message: MessageResponse }) {
+  return (
+    <MessageContainer className="justify-start">
+      <MessageText message={message} />
+    </MessageContainer>
+  );
+}
+function HumanMessage({ message }: { message: MessageResponse }) {
+  return (
+    <MessageContainer className="justify-end">
+      <MessageText
+        className="border border-gray-stroke-100 rounded-lg bg-gray-bg-100"
+        message={message}
+      />
+    </MessageContainer>
+  );
+}
+function ErrorMessage({ message }: { message: MessageResponse }) {
+  return (
+    <MessageContainer>
+      <MessageText message={message} />
+    </MessageContainer>
+  );
+}
+
+export { AIMessage, ErrorMessage, HumanMessage };
