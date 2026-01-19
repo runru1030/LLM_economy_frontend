@@ -7,6 +7,9 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { AppHeader } from "@shared/ui/header";
+import "../global.css";
+import { View } from "react-native";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -17,14 +20,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
+      <View className="flex-1 bg-white">
+        <Stack screenOptions={{ header: () => <AppHeader /> }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: true }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </View>
     </ThemeProvider>
   );
 }
