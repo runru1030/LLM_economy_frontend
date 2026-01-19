@@ -3,9 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@*": [
-        "./*"
-      ]
+      "@shared/*": ["./shared/*"],
+      "@constants/*": ["./constants/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
   "include": [

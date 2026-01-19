@@ -5,7 +5,7 @@
 @import "tailwindcss/utilities.css";
  
 @import "nativewind/theme";
-@import "@llm-economy/tailwind";
+@import "../../packages/tailwind/src/index.css";
 
 :root {
   --background: #ffffff;
@@ -15,6 +15,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 
-  "Pretendard Variable",Pretendard,Helvetica, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, Helvetica, sans-serif;
 }
