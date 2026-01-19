@@ -1,17 +1,16 @@
 "use client";
+import { MAX_ATTACHMENTS } from "@entities/agent/constants";
 import { FileAttachment } from "@entities/agent/types";
 import { FormEvent, useRef, useState } from "react";
 
-const MAX_ATTACHMENTS = 3;
-
-function FileAttachments({
+function AttachedFileList({
   attachments,
   setAttachments,
 }: {
   attachments: FileAttachment[];
   setAttachments: React.Dispatch<React.SetStateAction<FileAttachment[]>>;
 }) {
-  const removeAttachment = (key: string) => {
+  const handleRemoveAttachment = (key: string) => {
     setAttachments((prev) => prev.filter((att) => att.key !== key));
   };
 
@@ -24,7 +23,7 @@ function FileAttachments({
               key={attachment.key}
               className="flex items-center gap-2 rounded-md bg-gray-100 px-3 py-1.5 text-sm dark:bg-gray-800"
             >
-              <span className="max-w-[200px] truncate">{attachment.name}</span>
+              <span className="max-w-50 truncate">{attachment.name}</span>
               <span className="text-xs text-gray-500">
                 (
                 {attachment.size < 1024
@@ -34,7 +33,7 @@ function FileAttachments({
               </span>
               <button
                 type="button"
-                onClick={() => removeAttachment(attachment.key)}
+                onClick={() => handleRemoveAttachment(attachment.key)}
                 className="ml-1 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                 aria-label="Remove attachment"
               >
@@ -48,68 +47,36 @@ function FileAttachments({
   );
 }
 
-function FileAttachmentInput({ disabled }: { disabled?: boolean }) {
-  const [attachments, setAttachments] = useState<FileAttachment[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
-
+function FileAttachmentInput({
+  disabled,
+  attachments,
+}: {
+  disabled?: boolean;
+  attachments: FileAttachment[];
+}) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isUploading = false;
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    const remainingSlots = Math.max(0, MAX_ATTACHMENTS - attachments.length);
-    if (remainingSlots <= 0) {
-      alert(`You can attach up to ${MAX_ATTACHMENTS} files per message.`);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      return;
-    }
-
-    setIsUploading(true);
-
+  const handleFileUpload = async (files: FileList | null) => {
     try {
-      const selectedFiles = Array.from(files).slice(0, remainingSlots);
-      if (selectedFiles.length < files.length) {
-        alert(
-          `Only the first ${remainingSlots} file(s) were selected (max ${MAX_ATTACHMENTS} attachments).`,
-        );
+      if (!files || files.length === 0) return;
+
+      const remainingSlots = Math.max(0, MAX_ATTACHMENTS - attachments.length);
+      if (remainingSlots <= 0) {
+        alert(`You can attach up to ${MAX_ATTACHMENTS} files per message.`);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        return;
       }
 
-      const uploadPromises = selectedFiles.map(async (file) => {
-        const formData = new FormData();
+      const formData = new FormData();
+      Array.from(files).forEach((file) => {
         formData.append("file", file);
-
-        const response = await fetch("/api/agent/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "Upload failed");
-        }
-
-        const data = await response.json();
-        return {
-          url: data.url,
-          key: data.key,
-          name: data.name,
-          type: data.type,
-          size: data.size,
-        } as FileAttachment;
       });
-
-      const uploadedFiles = await Promise.all(uploadPromises);
-      setAttachments((prev) => [...prev, ...uploadedFiles]);
+      /* 파일 업로드 API */
     } catch (error) {
       console.error("File upload error:", error);
-      alert(error instanceof Error ? error.message : "Failed to upload files");
     } finally {
-      setIsUploading(false);
-      // Reset file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
@@ -120,7 +87,7 @@ function FileAttachmentInput({ disabled }: { disabled?: boolean }) {
         type="file"
         multiple
         accept="image/png,image/jpeg,application/pdf,text/markdown,text/plain,.md,.markdown,.txt"
-        onChange={handleFileSelect}
+        onChange={(e) => handleFileUpload(e.target?.files)}
         className="hidden"
         aria-label="File upload"
       />
@@ -143,15 +110,20 @@ function MessageInput() {
   const [isLoading, setIsLoading] = useState(false);
   const [attachments, setAttachments] = useState<FileAttachment[]>([]);
 
+  const sendDisabled =
+    (message.trim().length === 0 && attachments.length === 0) || isLoading;
+
   const handleSubmit = async (e: FormEvent) => {
     try {
+      if (sendDisabled) return;
+
       e.preventDefault();
-      if ((!message.trim() && attachments.length === 0) || isLoading) return;
       setIsLoading(true);
       // await onSendMessage(message, {
       //   tools: [],
       //   attachments: attachments.length > 0 ? attachments : undefined,
       // });
+      console.log("Sending message:", message, attachments);
       setMessage("");
       setAttachments([]);
     } catch (error) {
@@ -168,14 +140,13 @@ function MessageInput() {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="pt-2 w-full pb-4">
-      {/* Input Section */}
-      <FileAttachments
+    <form onSubmit={handleSubmit} className="pt-2 pb-4 w-full">
+      <AttachedFileList
         attachments={attachments}
         setAttachments={setAttachments}
       />
       <div className="flex gap-2">
-        <FileAttachmentInput />
+        <FileAttachmentInput attachments={attachments} />
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -188,9 +159,10 @@ function MessageInput() {
         />
 
         <button
-          disabled={(!message.trim() && attachments.length === 0) || isLoading}
-          className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0`}
+          disabled={sendDisabled}
+          className={`flex size-8 cursor-pointer items-center justify-center rounded-full p-0`}
           aria-label="Send message"
+          role="submit"
         >
           {isLoading ? "로딩중" : ">"}
         </button>
