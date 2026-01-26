@@ -28,8 +28,8 @@
 
       "style": {
         "useOptionalChain": "warn",
-        "useNullishCoalescing": "off",
-        "useArrayLiterals": "warn"
+        "useArrayLiterals": "warn",
+        "useConsistentTypeDefinitions": "error"
       },
 
       "correctness": {
@@ -40,10 +40,6 @@
 
       "complexity": {
         "noUselessTypeConstraint": "warn"
-      },
-
-      "nursery": {
-        "useConsistentTypeDefinitions": "off"
       }
     }
   },
@@ -51,12 +47,6 @@
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double"
-    }
-  },
-
-  "typescript": {
-    "formatter": {
-      "quoteStyle": "double"
     }
   }
 }
