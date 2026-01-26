@@ -18,28 +18,28 @@ type Api = Path[Method];
 
 type _FetchResponse = RequiredFetchResponse<ENDPOINT, Method>;
 type _FetchRequest = RequiredFetchRequest<ENDPOINT, Method>;
-export type GetSummaryListV5V1SummaryGetData = _FetchResponse["data"];
-export type GetSummaryListV5V1SummaryGetError = _FetchResponse["error"];
-export type GetSummaryListV5V1SummaryGetParams = _FetchRequest["params"];
-export type GetSummaryListV5V1SummaryGetBody = _FetchRequest["body"];
+export type GetSummaryListV1SummaryGetData = _FetchResponse["data"];
+export type GetSummaryListV1SummaryGetError = _FetchResponse["error"];
+export type GetSummaryListV1SummaryGetParams = _FetchRequest["params"];
+export type GetSummaryListV1SummaryGetBody = _FetchRequest["body"];
 
-export const getSummaryListV5V1SummaryGet = async (options: FetchOptions<Api>) => {
+export const getSummaryListV1SummaryGet = async (options: FetchOptions<Api>) => {
   return await client.GET(ENDPOINT, options);
 };
 
-export const getSummaryListV5V1SummaryGetQueryKey = (
-  params?: GetSummaryListV5V1SummaryGetParams,
+export const getSummaryListV1SummaryGetQueryKey = (
+  params?: GetSummaryListV1SummaryGetParams,
 ): readonly unknown[] => (params ? [ENDPOINT, params] : [ENDPOINT]);
 
-export function useGetSummaryListV5V1SummaryGetQuery(
+export function useGetSummaryListV1SummaryGetQuery(
   { params, body, ...options }: CustomUseQueryOptions<ENDPOINT, Method>,
   fetchOptions?: Partial<FetchOptions<Api>>,
 ) {
   return useQuery({
     ...options,
-    queryKey: getSummaryListV5V1SummaryGetQueryKey(params),
+    queryKey: getSummaryListV1SummaryGetQueryKey(params),
     queryFn: async ({ signal }) => {
-      const { data, error, response } = await getSummaryListV5V1SummaryGet({
+      const { data, error, response } = await getSummaryListV1SummaryGet({
         params,
         signal,
         body,

@@ -9,7 +9,7 @@ import { client } from "../base.client";
 import { useMutation } from "@tanstack/react-query";
 import type { FetchOptions } from "openapi-fetch";
 
-const ENDPOINT = "/v1/summary";
+const ENDPOINT = "/v1/economy-agent/chat";
 
 type ENDPOINT = typeof ENDPOINT;
 type Path = paths[ENDPOINT];
@@ -18,27 +18,27 @@ type Api = Path[Method];
 
 type _FetchResponse = RequiredFetchResponse<ENDPOINT, Method>;
 type _FetchRequest = RequiredFetchRequest<ENDPOINT, Method>;
-export type CreateProjectV5V1SummaryPostData = _FetchResponse["data"];
-export type CreateProjectV5V1SummaryPostError = _FetchResponse["error"];
-export type CreateProjectV5V1SummaryPostParams = _FetchRequest["params"];
-export type CreateProjectV5V1SummaryPostBody = _FetchRequest["body"];
+export type ChatV1EconomyAgentChatPostData = _FetchResponse["data"];
+export type ChatV1EconomyAgentChatPostError = _FetchResponse["error"];
+export type ChatV1EconomyAgentChatPostParams = _FetchRequest["params"];
+export type ChatV1EconomyAgentChatPostBody = _FetchRequest["body"];
 
-export const createProjectV5V1SummaryPost = async (options: FetchOptions<Api>) => {
+export const chatV1EconomyAgentChatPost = async (options: FetchOptions<Api>) => {
   return await client.POST(ENDPOINT, options);
 };
 
-const errorTypeGuard = (x: unknown, y: unknown): x is CreateProjectV5V1SummaryPostData => {
+const errorTypeGuard = (x: unknown, y: unknown): x is ChatV1EconomyAgentChatPostData => {
   return !y;
 };
 
-export function useCreateProjectV5V1SummaryPostMutation(
+export function useChatV1EconomyAgentChatPostMutation(
   options?: CustomUseMutationOptions<ENDPOINT, Method>,
   fetchOptions?: Partial<FetchOptions<Api>>,
 ) {
   return useMutation({
     ...options,
     mutationFn: async ({ params, body }) => {
-      const { data, error, response } = await createProjectV5V1SummaryPost({
+      const { data, error, response } = await chatV1EconomyAgentChatPost({
         params,
         body,
         ...fetchOptions,
