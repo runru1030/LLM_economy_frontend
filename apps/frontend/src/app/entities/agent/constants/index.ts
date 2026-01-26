@@ -1,2 +1,0 @@
-const MAX_ATTACHMENTS = 3;
-export { MAX_ATTACHMENTS };
