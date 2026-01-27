@@ -1,24 +1,12 @@
 "use client";
 import type { SummaryItem } from "@entities/summary/types";
-import {
-  ContentBox,
-  DateBox,
-  KeywordBox,
-  LinkBox,
-  TypeBox,
-} from "@entities/summary/ui";
+import { ContentBox, DateBox, KeywordBox, LinkBox, TypeBox } from "@entities/summary/ui";
 import useInView from "@shared/hooks/use-in-view";
 import { SkeletonUI } from "@shared/ui/skeleton";
 import { useEffect } from "react";
 import { useGetInfiniteSummaryList } from "../api";
 
-function SummaryItem({
-  content,
-  keywords,
-  author,
-  publishedAt,
-  url,
-}: SummaryItem) {
+function SummaryItem({ content, keywords, author, publishedAt, url }: SummaryItem) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
@@ -68,6 +56,13 @@ function SummaryList() {
     if (error) console.error(error);
   }, [error]);
 
+  useEffect(() => {
+    // 새로 고침 시 스크롤 맨 위로 이동
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0);
+    };
+  }, []);
+
   if (error) return <>something wrong..{error?.detail}</>;
   if (isSuccess && data?.pages.length === 0) return <>없어용</>;
 
@@ -85,10 +80,7 @@ function SummaryList() {
             url={summary.url}
           />
         ))}
-      {isFetching &&
-        Array.from({ length: 10 }).map((_, k) => (
-          <SummarySkeletonItem key={k} />
-        ))}
+      {isFetching && Array.from({ length: 10 }).map((_, k) => <SummarySkeletonItem key={k} />)}
       <div className="min-h-0.5" ref={ref} />
     </div>
   );
