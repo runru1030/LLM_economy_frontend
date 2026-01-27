@@ -1,4 +1,4 @@
-import { Thread } from "@widgets/agent/ui";
+import { Thread } from "@widgets/economy-agent/ui";
 
 export default function ThreadPage() {
   return (
