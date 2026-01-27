@@ -23,18 +23,12 @@
 
       "suspicious": {
         "noExplicitAny": "warn",
-        "noConsoleLog": "error"
-      },
-
-      "style": {
-        "useOptionalChain": "warn",
-        "useArrayLiterals": "warn",
-        "useConsistentTypeDefinitions": "error"
+        "noConsoleLog": "error",
+        "noArrayIndexKey": "warn"
       },
 
       "correctness": {
         "noUnusedVariables": "warn",
-        "noUnusedImports": "error",
         "noUndeclaredVariables": "error"
       },
 
