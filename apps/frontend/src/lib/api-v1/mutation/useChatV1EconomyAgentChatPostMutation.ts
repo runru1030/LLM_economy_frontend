@@ -18,32 +18,35 @@ type Api = Path[Method];
 
 type _FetchResponse = RequiredFetchResponse<ENDPOINT, Method>;
 type _FetchRequest = RequiredFetchRequest<ENDPOINT, Method>;
-export type ChatV1EconomyAgentChatPostData = _FetchResponse["data"];
-export type ChatV1EconomyAgentChatPostError = _FetchResponse["error"];
-export type ChatV1EconomyAgentChatPostParams = _FetchRequest["params"];
-export type ChatV1EconomyAgentChatPostBody = _FetchRequest["body"];
+export type ChatV1EconomyEconomyAgentThreadChatPostData = _FetchResponse["data"];
+export type ChatV1EconomyEconomyAgentThreadChatPostError = _FetchResponse["error"];
+export type ChatV1EconomyEconomyAgentThreadChatPostParams = _FetchRequest["params"];
+export type ChatV1EconomyEconomyAgentThreadChatPostBody = _FetchRequest["body"];
 
-export const chatV1EconomyAgentChatPost = async (options: FetchOptions<Api>) => {
+export const chatV1EconomyEconomyAgentThreadChatPost = async (options: FetchOptions<Api>) => {
   return await client.POST(ENDPOINT, options);
 };
 
-const errorTypeGuard = (x: unknown, y: unknown): x is ChatV1EconomyAgentChatPostData => {
+const errorTypeGuard = (
+  x: unknown,
+  y: unknown,
+): x is ChatV1EconomyEconomyAgentThreadChatPostData => {
   return !y;
 };
 
-export function useChatV1EconomyAgentChatPostMutation(
+export function useChatV1EconomyEconomyAgentThreadChatPostMutation(
   options?: CustomUseMutationOptions<ENDPOINT, Method>,
   fetchOptions?: Partial<FetchOptions<Api>>,
 ) {
   return useMutation({
     ...options,
     mutationFn: async ({ params, body }) => {
-      const { data, error, response } = await chatV1EconomyAgentChatPost({
+      const { data, error, response } = await chatV1EconomyEconomyAgentThreadChatPost({
         params,
         body,
         ...fetchOptions,
       });
-      
+
       if (errorTypeGuard(data, error)) {
         return data;
       }
