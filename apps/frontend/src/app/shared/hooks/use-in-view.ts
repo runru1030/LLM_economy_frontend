@@ -16,13 +16,13 @@ export default function useInView({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             onInteract();
           }
-        });
+        }
       },
-      { rootMargin }
+      { rootMargin },
     );
     observer.observe(ref.current);
     return () => observer.disconnect();

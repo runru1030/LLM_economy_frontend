@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type DefaultSearchParams = { [key: string]: string | string[] };
 
 declare interface BasePageProps<T, U> {
@@ -6,7 +8,7 @@ declare interface BasePageProps<T, U> {
 }
 
 declare interface BaseLayoutProps<T> {
-  children: React.ReactNode;
+  children: ReactNode;
   params: T;
 }
 
