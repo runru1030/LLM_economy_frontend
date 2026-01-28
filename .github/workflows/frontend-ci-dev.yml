@@ -1,0 +1,73 @@
+name: CI Dev
+run-name: CI Dev action run by ${{github.actor}}
+
+on:
+  push:
+    paths:
+      - "apps/frontend/**"
+      - "packages/**"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - "apps/frontend/**"
+      - "packages/**"
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  front-ci:
+    if: ${{ github.event.pull_request.draft == false }}
+    name: Front CI
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - run: |
+          git fetch --no-tags origin main
+          git checkout main
+          git checkout ${{ github.event.pull_request.head.sha }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+          run_install: false
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build dependencies
+        run: pnpm --filter=reaflow run -r build
+
+      - name: Check TS
+        run: pnpm --filter=oneplatform run -r type-check
+
+      - name: Check next lint
+        run: pnpm --filter=oneplatform run -r lint --cache-strategy content
+        
+      - name: Run tests with coverage
+        run: pnpm --filter=frontend run -r test:coverage:changed-files
+
