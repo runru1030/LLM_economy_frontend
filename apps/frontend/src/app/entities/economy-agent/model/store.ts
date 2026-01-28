@@ -8,6 +8,7 @@ interface States {
   threadDetail: ThreadDetail | null;
   isInitialThread: boolean;
   isSending: boolean;
+  isPending: boolean;
 }
 
 interface Actions {
@@ -21,6 +22,7 @@ const initialState: States = {
   threadDetail: null,
   isInitialThread: false,
   isSending: false,
+  isPending: false,
 };
 
 export type EconomyAgentThreadStore = States & Actions;
@@ -59,8 +61,13 @@ export const createEconomyAgentThreadStore = () => {
         const parsed = parseChunk(chunk as APIThreadResponse);
 
         switch (parsed.kind) {
+          case "start":
+            set({ isPending: true });
+            break;
           case "assistant":
             set((state) => {
+              state.isPending = false;
+
               if (!state.threadDetail) return;
               state.threadDetail.messages = mergeChunk(state.threadDetail.messages, {
                 type: MessageType.AI,
@@ -69,6 +76,7 @@ export const createEconomyAgentThreadStore = () => {
             });
             break;
           case "end":
+            set({ isPending: false });
             break;
         }
       },

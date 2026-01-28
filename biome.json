@@ -29,7 +29,8 @@
 
       "correctness": {
         "noUnusedVariables": "warn",
-        "noUndeclaredVariables": "error"
+        "noUndeclaredVariables": "error",
+        "useExhaustiveDependencies": "warn"
       },
 
       "complexity": {

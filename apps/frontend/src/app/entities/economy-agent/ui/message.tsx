@@ -32,7 +32,7 @@ function MessageContainer({
 function AIMessage({ message }: { message: MessageResponse }) {
   return (
     <MessageContainer className="justify-start">
-      <MessageText message={message} />
+      <MessageText className="px-0!" message={message} />
     </MessageContainer>
   );
 }
