@@ -25,7 +25,7 @@ function MessageText({
   className?: string;
 }) {
   return (
-    <div className={clsx(className, "py-1 px-2 whitespace-pre-wrap")}>
+    <div className={clsx(className, "py-1.5 px-3 whitespace-pre-wrap body3-regular")}>
       <p>{getMessageContent(message)}</p>
     </div>
   );
@@ -52,10 +52,7 @@ function AIMessage({ message }: { message: MessageResponse }) {
 function HumanMessage({ message }: { message: MessageResponse }) {
   return (
     <MessageContainer className="justify-end">
-      <MessageText
-        className="border border-gray-stroke-100 rounded-lg bg-gray-bg-100"
-        message={message}
-      />
+      <MessageText className="rounded-lg bg-gray-bg-200" message={message} />
     </MessageContainer>
   );
 }

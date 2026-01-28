@@ -15,9 +15,15 @@ export default function MarkdownItem(props: Props) {
         backgroundColor: "transparent",
         color: "inherit",
         padding: 0,
-        fontSize: "0.8rem",
+        fontSize: "0.9rem",
+        wordBreak: "keep-all",
       }}
       rehypePlugins={[rehypeKatex]}
+      components={{
+        ul: (props) => <ul className="pl-4! list-disc" {...props} />,
+        hr: (props) => <hr className="h-px! border-none! bg-gray-300!" {...props} />,
+        h2: (props) => <h2 className="border-none!" {...props} />,
+      }}
     />
   );
 }
