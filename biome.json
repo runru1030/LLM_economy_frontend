@@ -23,27 +23,18 @@
 
       "suspicious": {
         "noExplicitAny": "warn",
-        "noConsoleLog": "error"
-      },
-
-      "style": {
-        "useOptionalChain": "warn",
-        "useNullishCoalescing": "off",
-        "useArrayLiterals": "warn"
+        "noConsoleLog": "error",
+        "noArrayIndexKey": "warn"
       },
 
       "correctness": {
         "noUnusedVariables": "warn",
-        "noUnusedImports": "error",
-        "noUndeclaredVariables": "error"
+        "noUndeclaredVariables": "error",
+        "useExhaustiveDependencies": "warn"
       },
 
       "complexity": {
         "noUselessTypeConstraint": "warn"
-      },
-
-      "nursery": {
-        "useConsistentTypeDefinitions": "off"
       }
     }
   },
@@ -51,12 +42,6 @@
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double"
-    }
-  },
-
-  "typescript": {
-    "formatter": {
-      "quoteStyle": "double"
     }
   }
 }

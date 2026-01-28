@@ -6,11 +6,51 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Summary List V5 */
-        get: operations["get_summary_list_v5_v1_summary_get"];
+        /** Get Summary List */
+        get: operations["get_summary_list_v1_summary_get"];
         put?: never;
-        /** Create Project V5 */
-        post: operations["create_project_v5_v1_summary_post"];
+        /** Create Project */
+        post: operations["create_project_v1_summary_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/economy-agent/chat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Chat
+         * @description 실시간 대화
+         */
+        post: operations["chat_v1_economy_agent_chat_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/economy-agent/chat/{thread_id}/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Replay Thread
+         * @description 실시간 대화
+         */
+        post: operations["replay_thread_v1_economy_agent_chat__thread_id__replay_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -52,6 +92,16 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * OrderBy
+         * @enum {string}
+         */
+        OrderBy: "published_at" | "created_at";
+        /** ReplayAnswerRequest */
+        ReplayAnswerRequest: {
+            /** Message Id */
+            message_id?: string | null;
         };
         /** SummaryGetResponse */
         SummaryGetResponse: {
@@ -96,6 +146,46 @@ export interface components {
             /** Summary List */
             summary_list: components["schemas"]["CreateSummaryData"][];
         };
+        /** TextMessage */
+        TextMessage: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+            /**
+             * Text
+             * @description 텍스트 메시지입니다.
+             */
+            text: string;
+        };
+        /** ThreadRequest */
+        ThreadRequest: {
+            /**
+             * Thread Id
+             * @description 메시지를 전송할 채팅방 ID입니다. 없으면 새로운 채팅방을 생성합니다.
+             */
+            thread_id?: string | null;
+            /**
+             * Messages
+             * @description 전송할 메시지입니다.
+             */
+            messages: components["schemas"]["TextMessage"][];
+        };
+        /** ThreadResponse */
+        ThreadResponse: {
+            /** Id */
+            id: string;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "hm" | "am" | "amc" | "tm" | "thread_start" | "thread_end" | "thread_error" | "tool_start";
+            /** Data */
+            data: string | unknown[] | {
+                [key: string]: unknown;
+            };
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -114,13 +204,15 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    get_summary_list_v5_v1_summary_get: {
+    get_summary_list_v1_summary_get: {
         parameters: {
             query?: {
                 /** @description 페이지 당 데이터 개수 */
                 limit?: number;
                 /** @description 페이지 인덱스 */
                 offset?: number;
+                /** @description 정렬 대상 */
+                order_by?: components["schemas"]["OrderBy"];
                 /** @description 오름차순 정렬 여부 */
                 asc?: boolean;
             };
@@ -150,7 +242,7 @@ export interface operations {
             };
         };
     };
-    create_project_v5_v1_summary_post: {
+    create_project_v1_summary_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -170,6 +262,74 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chat_v1_economy_agent_chat_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ThreadRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replay_thread_v1_economy_agent_chat__thread_id__replay_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                thread_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplayAnswerRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ThreadResponse"];
                 };
             };
             /** @description Validation Error */

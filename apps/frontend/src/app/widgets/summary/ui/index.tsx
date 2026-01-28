@@ -6,7 +6,7 @@ import { SkeletonUI } from "@shared/ui/skeleton";
 import { useEffect } from "react";
 import { useGetInfiniteSummaryList } from "../api";
 
-function SummaryItem({ content, keywords, author, publishedAt, url }: SummaryItem) {
+function SummaryItemBox({ content, keywords, author, publishedAt, url }: SummaryItem) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
@@ -71,7 +71,7 @@ function SummaryList() {
       {data?.pages
         .flatMap((page) => page.summaries)
         .map((summary) => (
-          <SummaryItem
+          <SummaryItemBox
             author={summary.author}
             content={summary.content}
             keywords={summary.keywords}
