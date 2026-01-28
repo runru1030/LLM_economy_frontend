@@ -4,6 +4,19 @@ import { MessageResponse } from "../types";
 import { PropsWithChildren } from "react";
 import MarkdownItem from "@shared/ui/markdown-item";
 
+function AIMessageText({
+  message,
+  className,
+}: {
+  message: MessageResponse;
+  className?: string;
+}) {
+  return (
+    <div className={clsx(className, "py-1")}>
+      <MarkdownItem content={getMessageContent(message)} />
+    </div>
+  );
+}
 function MessageText({
   message,
   className,
@@ -12,8 +25,8 @@ function MessageText({
   className?: string;
 }) {
   return (
-    <div className={clsx(className, "px-2 py-1")}>
-      <MarkdownItem content={getMessageContent(message)} />
+    <div className={clsx(className, "py-1 px-2 whitespace-pre-wrap")}>
+      <p>{getMessageContent(message)}</p>
     </div>
   );
 }
@@ -32,7 +45,7 @@ function MessageContainer({
 function AIMessage({ message }: { message: MessageResponse }) {
   return (
     <MessageContainer className="justify-start">
-      <MessageText className="px-0!" message={message} />
+      <AIMessageText message={message} />
     </MessageContainer>
   );
 }
