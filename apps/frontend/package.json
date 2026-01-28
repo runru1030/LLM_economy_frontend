@@ -12,7 +12,8 @@
     "reporter": "biome check --reporter=summary",
     "openapi": "llm-economy-openapi -i http://fastapi-1168064217.us-west-2.elb.amazonaws.com/openapi.json -o src/lib/api-v1",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "test:coverage:changed-files": "vitest run --coverage --changed=main"
   },
   "dependencies": {
     "@llm-economy/openapi": "workspace:*",
