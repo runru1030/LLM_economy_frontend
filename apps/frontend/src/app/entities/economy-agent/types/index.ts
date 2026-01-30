@@ -1,8 +1,11 @@
 import { components } from "src/lib/api-v1/paths";
 import { MessageType } from "../constants";
+import { ThreadHistoryV1EconomyAgentThreadThreadIdGetData } from "src/lib/api-v1/query/useThreadHistoryV1EconomyAgentThreadThreadIdGetQuery";
 
 // api
+
 type APIThreadResponse = components["schemas"]["ThreadResponse"];
+type APIThreadDetailResponse = ThreadHistoryV1EconomyAgentThreadThreadIdGetData;
 
 // client types
 interface MessageRequest {
@@ -32,16 +35,12 @@ interface MessageResponse {
 }
 
 interface Thread {
-  id: string;
   title?: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface ThreadDetail extends Thread {
-  messages: MessageResponse[];
-}
-export type { APIThreadResponse };
+export type { APIThreadResponse, APIThreadDetailResponse };
 export type {
   AIMessageData,
   BasicMessageData,
@@ -49,5 +48,4 @@ export type {
   MessageResponse,
   TextContentItem,
   Thread,
-  ThreadDetail,
 };

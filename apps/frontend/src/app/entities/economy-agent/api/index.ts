@@ -1,32 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import { ThreadDetail } from "../types";
+import { threadHistoryV1EconomyAgentThreadThreadIdGetQueryKey } from "src/lib/api-v1/query/useThreadHistoryV1EconomyAgentThreadThreadIdGetQuery";
 
-const mockThreadDetail: ThreadDetail = {
-  id: "thread_001",
-  title: "오늘 시장 요약",
-  createdAt: "2026-01-19T09:00:00Z",
-  updatedAt: "2026-01-19T09:06:30Z",
-
-  messages: [],
-};
-
-const ENDPOINT = "/api/agent/thread-detail";
-interface ThreadDetailParams {
-  threadId: string;
-}
-const getThreadDetailQueryKey = (params?: ThreadDetailParams): readonly unknown[] =>
-  params ? [ENDPOINT, params] : [ENDPOINT];
-
-function useGetThreadDetail({ threadId }: ThreadDetailParams) {
-  const query = useQuery({
-    queryKey: getThreadDetailQueryKey({ threadId }),
+function getThreadDetailQueryOptions(threadId: string) {
+  return {
+    queryKey: threadHistoryV1EconomyAgentThreadThreadIdGetQueryKey({
+      path: { thread_id: threadId },
+    }),
     queryFn: async () => {
-      // In real implementation, fetch from API
-      return mockThreadDetail;
+      const res = await fetch(
+        `${process.env.NEXT_PROXY_API_URL}/v1/economy-agent/thread/${threadId}`,
+      );
+      if (!res.ok) {
+        throw new Error("데이터를 가져오는데 실패했습니다.");
+      }
+
+      return res.json();
     },
-  });
+  };
+}
+function useGetThreadDetail({ threadId }: { threadId: string }) {
+  const query = useQuery(getThreadDetailQueryOptions(threadId));
 
   return { data: query.data, isLoading: query.isLoading, error: query.error };
 }
 
-export { getThreadDetailQueryKey, useGetThreadDetail };
+export { getThreadDetailQueryOptions, useGetThreadDetail };
