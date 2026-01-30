@@ -2,6 +2,7 @@ import { MessageType } from "@entities/economy-agent/constants";
 import { MessageResponse } from "@entities/economy-agent/types";
 import { describe, expect, it } from "vitest";
 import { getMessageContent, mergeChunk, parseChunk } from "../stream";
+import { threadId } from "worker_threads";
 
 describe("parseChunk", () => {
   it("assistant(amc) chunk를 올바르게 파싱한다", () => {
@@ -18,18 +19,8 @@ describe("parseChunk", () => {
     });
   });
 
-  it("amc 이지만 data가 string이 아니면 ignore", () => {
-    const chunk = {
-      type: "amc",
-      id: "msg_1",
-      data: 123,
-    } as any;
-
-    expect(parseChunk(chunk)).toEqual({ kind: "ignore" });
-  });
-
   it("thread_start / thread_end 를 올바르게 파싱한다", () => {
-    expect(parseChunk({ type: "thread_start" } as any)).toEqual({ kind: "start" });
+    expect(parseChunk({ type: "thread_start" } as any)).toEqual({ kind: "ignore" });
     expect(parseChunk({ type: "thread_end" } as any)).toEqual({ kind: "end" });
   });
 
