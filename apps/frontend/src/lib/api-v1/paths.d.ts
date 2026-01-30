@@ -57,6 +57,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/economy-agent/thread/{thread_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Thread History */
+        get: operations["thread_history_v1_economy_agent_thread__thread_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -158,6 +175,25 @@ export interface components {
              * @description 텍스트 메시지입니다.
              */
             text: string;
+        };
+        /** ThreadHistoryResponse */
+        ThreadHistoryResponse: {
+            /**
+             * Thread Id
+             * Format: uuid
+             */
+            thread_id: string;
+            /** Messages */
+            messages: components["schemas"]["ThreadMessage"][];
+        };
+        /** ThreadMessage */
+        ThreadMessage: {
+            /** Id */
+            id: string | null;
+            /** Role */
+            role: string;
+            /** Content */
+            content: components["schemas"]["TextMessage"][];
         };
         /** ThreadRequest */
         ThreadRequest: {
@@ -330,6 +366,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ThreadResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thread_history_v1_economy_agent_thread__thread_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                thread_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ThreadHistoryResponse"];
                 };
             };
             /** @description Validation Error */

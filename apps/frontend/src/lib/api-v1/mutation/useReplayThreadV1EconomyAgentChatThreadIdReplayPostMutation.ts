@@ -18,42 +18,32 @@ type Api = Path[Method];
 
 type _FetchResponse = RequiredFetchResponse<ENDPOINT, Method>;
 type _FetchRequest = RequiredFetchRequest<ENDPOINT, Method>;
-export type ReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostData =
-  _FetchResponse["data"];
-export type ReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostError =
-  _FetchResponse["error"];
-export type ReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostParams =
-  _FetchRequest["params"];
-export type ReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostBody =
-  _FetchRequest["body"];
+export type ReplayThreadV1EconomyAgentChatThreadIdReplayPostData = _FetchResponse["data"];
+export type ReplayThreadV1EconomyAgentChatThreadIdReplayPostError = _FetchResponse["error"];
+export type ReplayThreadV1EconomyAgentChatThreadIdReplayPostParams = _FetchRequest["params"];
+export type ReplayThreadV1EconomyAgentChatThreadIdReplayPostBody = _FetchRequest["body"];
 
-export const replayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPost = async (
-  options: FetchOptions<Api>,
-) => {
+export const replayThreadV1EconomyAgentChatThreadIdReplayPost = async (options: FetchOptions<Api>) => {
   return await client.POST(ENDPOINT, options);
 };
 
-const errorTypeGuard = (
-  x: unknown,
-  y: unknown,
-): x is ReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostData => {
+const errorTypeGuard = (x: unknown, y: unknown): x is ReplayThreadV1EconomyAgentChatThreadIdReplayPostData => {
   return !y;
 };
 
-export function useReplayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPostMutation(
+export function useReplayThreadV1EconomyAgentChatThreadIdReplayPostMutation(
   options?: CustomUseMutationOptions<ENDPOINT, Method>,
   fetchOptions?: Partial<FetchOptions<Api>>,
 ) {
   return useMutation({
     ...options,
     mutationFn: async ({ params, body }) => {
-      const { data, error, response } =
-        await replayThreadV1EconomyEconomyAgentThreadChatThreadIdReplayPost({
-          params,
-          body,
-          ...fetchOptions,
-        });
-
+      const { data, error, response } = await replayThreadV1EconomyAgentChatThreadIdReplayPost({
+        params,
+        body,
+        ...fetchOptions,
+      });
+      
       if (errorTypeGuard(data, error)) {
         return data;
       }
