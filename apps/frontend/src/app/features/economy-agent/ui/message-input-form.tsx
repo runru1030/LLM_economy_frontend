@@ -162,7 +162,7 @@ function MessageSendButton({ disabled, isSending }: { disabled?: boolean; isSend
 function MessageInputForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const threadId = useEconomyAgentThreadStore((state) => state.threadDetail?.id);
+  const threadId = useEconomyAgentThreadStore((state) => state.threadId);
   const [isSending, setIsSending] = useEconomyAgentThreadStore(
     useShallow((state) => [state.isSending, state.setIsSending]),
   );
@@ -173,8 +173,8 @@ function MessageInputForm() {
     const form = formRef.current;
     if (!form) return;
 
-    const textarea = form.elements.namedItem(INPUT_NAME);
-    const message = (textarea as HTMLTextAreaElement)?.value.trim();
+    const textarea = form.elements.namedItem(INPUT_NAME) as HTMLTextAreaElement;
+    const message = textarea?.value.trim();
     if (!message) return;
 
     await fetchWithSSE({
@@ -197,6 +197,9 @@ function MessageInputForm() {
       onChunk: updateMessageByChunk,
       onSettled: () => {
         setIsSending(false);
+        requestAnimationFrame(() => {
+          textarea?.focus();
+        });
       },
     });
   };

@@ -2,24 +2,28 @@ import { immer } from "zustand/middleware/immer";
 import { createStore } from "zustand/vanilla";
 import { MessageType } from "../constants";
 import { mergeChunk, parseChunk } from "../lib";
-import { APIThreadResponse, MessageResponse, ThreadDetail } from "../types";
+import { APIThreadDetailResponse, APIThreadResponse, MessageResponse, Thread } from "../types";
+import { convertThreadDetailApiToClient } from "../lib/convert";
 
 interface States {
-  threadDetail: ThreadDetail | null;
+  thread: Thread | null;
+  threadId: string | null;
+  messages: MessageResponse[];
   isInitialThread: boolean;
   isSending: boolean;
   isPending: boolean;
 }
 
 interface Actions {
-  setThreadDetail: (threadDetail: ThreadDetail) => void;
   appendMessage(msg: MessageResponse): void;
   updateMessageByChunk(chunk: unknown): void;
   setIsSending(loading: boolean): void;
 }
 
 const initialState: States = {
-  threadDetail: null,
+  thread: null,
+  threadId: null,
+  messages: [],
   isInitialThread: false,
   isSending: false,
   isPending: false,
@@ -27,28 +31,19 @@ const initialState: States = {
 
 export type EconomyAgentThreadStore = States & Actions;
 
-export const createEconomyAgentThreadStore = () => {
+export const createEconomyAgentThreadStore = (initialData?: APIThreadDetailResponse) => {
+  const initialThreadData = initialData ? convertThreadDetailApiToClient(initialData) : {};
   return createStore<EconomyAgentThreadStore>()(
     immer((set, get) => ({
       ...initialState,
-      setThreadDetail: (threadDetail: ThreadDetail) => {
-        // 서버 데이터 변환 예정
-        set({
-          threadDetail,
-        });
-      },
+      ...initialThreadData,
       appendMessage: (message: MessageResponse) => {
         set((state) => {
-          const messages = state.threadDetail?.messages;
-          if (
-            !state.threadDetail ||
-            !messages ||
-            messages.some((m) => m.data.id === message.data.id)
-          )
-            return;
+          const messages = state.messages;
+          if (!messages || messages.some((m) => m.data.id === message.data.id)) return;
 
           const newMessages = [...messages, message];
-          state.threadDetail.messages = newMessages;
+          state.messages = newMessages;
         });
       },
       setIsSending: (loading: boolean) => {
@@ -62,14 +57,15 @@ export const createEconomyAgentThreadStore = () => {
 
         switch (parsed.kind) {
           case "start":
-            set({ isPending: true });
+            set((state) => {
+              state.isPending = true;
+              if (!state.threadId) state.threadId = parsed.threadId;
+            });
             break;
           case "assistant":
             set((state) => {
               state.isPending = false;
-
-              if (!state.threadDetail) return;
-              state.threadDetail.messages = mergeChunk(state.threadDetail.messages, {
+              state.messages = mergeChunk(state.messages, {
                 type: MessageType.AI,
                 data: parsed,
               });

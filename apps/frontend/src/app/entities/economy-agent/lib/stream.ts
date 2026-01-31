@@ -8,17 +8,12 @@ type ParsedChunk =
       id: string;
       content: string;
     }
-  | { kind: "start" }
+  | { kind: "start"; threadId: string }
   | { kind: "end" }
   | { kind: "ignore" };
 
 function hasStringKey<K extends string>(value: unknown, key: K): value is Record<K, string> {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    key in value &&
-    typeof (value as any)[key] === "string"
-  );
+  return typeof value === "object" && value !== null && key in value;
 }
 
 function parseChunk(chunk: components["schemas"]["ThreadResponse"]): ParsedChunk {
@@ -31,7 +26,9 @@ function parseChunk(chunk: components["schemas"]["ThreadResponse"]): ParsedChunk
         content: chunk.data,
       };
     case "thread_start":
-      return { kind: "start" };
+      if (!hasStringKey(chunk, "data") || !hasStringKey(chunk.data, "thread_id"))
+        return { kind: "ignore" };
+      return { kind: "start", threadId: chunk.data.thread_id };
     case "thread_end":
       return { kind: "end" };
     default:

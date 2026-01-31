@@ -14,14 +14,12 @@ function AIMessageSkeleton() {
 
 function MessageList() {
   const bottomRef = useRef<HTMLDivElement>(null);
-  const messages = useEconomyAgentThreadStore(
-    useShallow((state) => state.threadDetail?.messages || []),
-  );
+  const messages = useEconomyAgentThreadStore(useShallow((state) => state?.messages || []));
   const isPending = useEconomyAgentThreadStore((state) => state.isPending);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isPending]);
 
   return (
     <div className="w-full flex gap-3 flex-col">
@@ -35,7 +33,7 @@ function MessageList() {
         }[message.type];
       })}
       {isPending && <AIMessageSkeleton />}
-      <div ref={bottomRef} className="h-px" />
+      <div ref={bottomRef} className="min-h-px" />
     </div>
   );
 }
