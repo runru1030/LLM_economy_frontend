@@ -1,6 +1,6 @@
 import { ChatV1Body } from "src/lib/api-v1/mutation/useChatV1Mutation";
 
-const ENDPOINT = "/v1/economy-agent/chat";
+const ENDPOINT = "/api/v1/economy-agent/chat";
 async function postChatStream({
   threadId,
   messages,

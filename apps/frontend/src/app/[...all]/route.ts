@@ -10,12 +10,11 @@ async function router(req: NextRequest) {
   req.headers.delete("origin");
   req.headers.delete("referer");
   req.headers.delete("content-length");
-  
-  const path = req.nextUrl.pathname.replace(/^\/api/, "");
+
+  const path = req.nextUrl.pathname;
   const search = req.nextUrl.search;
   const targetUrl = `${PROXY_URL}${path}${search}`;
   const body = req.method !== "GET" ? await req.blob() : ({ size: 0 } as Blob);
-
   const res = await fetch(targetUrl, {
     method: req.method,
     body: body.size ? body : undefined,
@@ -31,10 +30,7 @@ async function router(req: NextRequest) {
 
   // nextjs가 본문 요청 길이가 0인 경우 요청 길이를 제거하고 transfer-encoding을 추가하여 프론트에서 파싱 오류가 생김.
   let resBody: typeof res.body | string = res.body;
-  if (
-    req.nextUrl.href.includes("api") &&
-    headers.get("Content-Length") === "0"
-  ) {
+  if (req.nextUrl.href.includes("api") && headers.get("Content-Length") === "0") {
     resBody = "{}";
     headers.set("Content-Length", "2");
   }

@@ -8,7 +8,7 @@ function getThreadDetailQueryOptions(threadId: string) {
     }),
     queryFn: async () => {
       const baseUrl = process.env.NEXT_PROXY_API_URL ?? "";
-      const res = await fetch(`${baseUrl}/v1/economy-agent/thread/${threadId}`);
+      const res = await fetch(`${baseUrl}/api/v1/economy-agent/thread/${threadId}`);
       if (!res.ok) {
         throw new Error("데이터를 가져오는데 실패했습니다.");
       }
