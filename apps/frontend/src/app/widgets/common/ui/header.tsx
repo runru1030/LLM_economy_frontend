@@ -36,7 +36,7 @@ function HeaderContainer({
   rightItem?: React.ReactNode;
 }) {
   return (
-    <div className="h-15 flex items-center sticky top-0 left-0 px-4 bg-white border-b border-gray-100  font-extralight gap-2.5 justify-between text-gray-800">
+    <div className="h-12 flex items-center sticky top-0 left-0 px-4 bg-white font-extralight gap-2.5 justify-between text-gray-800 body3-regular">
       <div className="flex items-center gap-2">
         {leftItem}
         {text}

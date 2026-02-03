@@ -10,7 +10,7 @@ export default function Layout({
   return (
     <main>
       <Header />
-      <div className="max-w-120 mx-auto h-[calc(100vh-60px)]">{children}</div>
+      <div className="max-w-120 mx-auto h-[calc(100vh-48px)] overflow-auto">{children}</div>
       <FloatingNav />
     </main>
   );
