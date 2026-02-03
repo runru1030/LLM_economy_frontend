@@ -3,16 +3,16 @@ import { APIThreadDetailResponse } from "../types";
 
 function convertThreadDetailApiToClient(detail: APIThreadDetailResponse) {
   return {
-    threadId: detail?.thread_id,
+    threadId: detail.metadata.thread_id,
     thread: {
-      title: "",
-      createdAt: "2023-01-01T00:00:00Z",
-      updatedAt: "2023-01-01T00:00:00Z",
+      title: detail.metadata.subject,
+      createdAt: detail.metadata.created_at,
+      updatedAt: detail.metadata.updated_at,
     },
-    messages: detail?.messages.map((msg) => ({
+    messages: detail.messages.map((msg) => ({
       type: msg.role === "assistant" ? MessageType.AI : MessageType.HUMAN,
       data: {
-        id: msg.id || "",
+        id: msg.id,
         content: msg.content,
       },
     })),
