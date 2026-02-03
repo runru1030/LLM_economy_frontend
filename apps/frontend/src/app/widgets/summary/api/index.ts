@@ -1,27 +1,24 @@
 import { UndefinedInitialDataInfiniteOptions, useInfiniteQuery } from "@tanstack/react-query";
 import {
-  GetSummaryListV1SummaryGetParams,
-  GetSummaryListV1SummaryGetError,
-  getSummaryListV1SummaryGet,
-  getSummaryListV1SummaryGetQueryKey,
-  GetSummaryListV1SummaryGetData,
-} from "src/lib/api-v1/query/useGetSummaryListV1SummaryGetQuery";
+  getSummaryListV1,
+  GetSummaryListV1Data,
+  GetSummaryListV1Error,
+  GetSummaryListV1Params,
+  getSummaryListV1QueryKey,
+} from "src/lib/api-v1/query/useGetSummaryListV1Query";
 
 function useGetInfiniteSummaryList({
   params,
   options,
 }: {
-  params: GetSummaryListV1SummaryGetParams;
-  options?: UndefinedInitialDataInfiniteOptions<
-    GetSummaryListV1SummaryGetData,
-    GetSummaryListV1SummaryGetError
-  >;
+  params: GetSummaryListV1Params;
+  options?: UndefinedInitialDataInfiniteOptions<GetSummaryListV1Data, GetSummaryListV1Error>;
 }) {
   const { data, fetchNextPage, hasNextPage, isFetching, isSuccess, error } = useInfiniteQuery({
-    queryKey: getSummaryListV1SummaryGetQueryKey(params),
+    queryKey: getSummaryListV1QueryKey(params),
     initialPageParam: 1,
     queryFn: async ({ pageParam = 0, signal }) => {
-      const { data, error, response } = await getSummaryListV1SummaryGet({
+      const { data, error, response } = await getSummaryListV1({
         params: { query: { ...params?.query, offset: pageParam as number } },
         signal,
       });
