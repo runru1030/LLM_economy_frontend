@@ -13,8 +13,7 @@ function parseEndpoint(node, queryPath, mutationPath) {
             node.forEachChild((node) => {
                 if (ts.isPropertySignature(node)) {
                     const propertyText = node.getText();
-                    if (propertyText.endsWith("never;") ||
-                        propertyText.startsWith("parameters:")) {
+                    if (propertyText.endsWith("never;") || propertyText.startsWith("parameters:")) {
                         return;
                     }
                     const operationIdExtract = /operations\["(.+)"]/g.exec(node.getText());

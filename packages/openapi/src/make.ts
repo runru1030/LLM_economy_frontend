@@ -124,18 +124,6 @@ export function isNonApiError(e: unknown): e is Error {
 export async function makeDeclareString(openapi: string) {
   const ast = await openapiTS(openapi, {
     inject: "/* eslint-disable @typescript-eslint/ban-types */",
-    transform: (schemaObject, options) => {
-      if (
-        schemaObject.title === "Lab Space Id" &&
-        options.path?.startsWith("#/paths")
-      ) {
-        schemaObject.oneOf = [{ type: "string" }, { type: "number" }];
-      }
-      if (schemaObject.title === "Project Id") {
-        schemaObject.type = "string";
-      }
-      return undefined;
-    },
   });
 
   return astToString(ast);
@@ -200,21 +188,24 @@ export function #HOOK_NAME#(
   });
 }
 `;
-
+const excludeWords = ["api"];
 export function makeUseQueryString(
   endpoint: string,
-  {
-    operationId = "",
-    deprecated = false,
-  }: { operationId?: string | null; deprecated?: boolean },
+  { operationId = "", deprecated = false }: { operationId?: string | null; deprecated?: boolean },
 ) {
   if (!operationId) {
     operationId = endpoint
       .split("/")
-      .filter((x) => !x.includes("{"))
+      .filter((x) => !x.includes("{") && !excludeWords.includes(x.toLowerCase()))
       .slice(1)
       .join("_");
   }
+  const rawParts = operationId.split("_");
+  const vIdx = rawParts.findIndex((p) => /^v\d+$/i.test(p));
+  operationId = rawParts
+    .slice(0, vIdx !== -1 ? vIdx + 1 : undefined)
+    .filter((x) => !excludeWords.includes(x.toLowerCase()))
+    .join("_");
 
   const functionName = _.camelCase(operationId);
   const pascalFunctionName = _.upperFirst(functionName);
@@ -293,10 +284,7 @@ export function #HOOK_NAME#(
 export function makeUseMutationString(
   method: string,
   endpoint: string,
-  {
-    operationId = "",
-    deprecated = false,
-  }: { operationId?: string | null; deprecated?: boolean },
+  { operationId = "", deprecated = false }: { operationId?: string | null; deprecated?: boolean },
 ) {
   if (deprecated) {
     return;
@@ -309,6 +297,12 @@ export function makeUseMutationString(
       .slice(1)
       .join("_");
   }
+  const rawParts = operationId.split("_");
+  const vIdx = rawParts.findIndex((p) => /^v\d+$/i.test(p));
+  operationId = rawParts
+    .slice(0, vIdx !== -1 ? vIdx + 1 : undefined)
+    .filter((x) => !excludeWords.includes(x.toLowerCase()))
+    .join("_");
 
   const functionName = _.camelCase(operationId);
   const pascalFunctionName = _.upperFirst(functionName);

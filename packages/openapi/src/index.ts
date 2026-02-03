@@ -9,11 +9,7 @@ import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
 
-function parseEndpoint(
-  node: ts.PropertySignature,
-  queryPath: string,
-  mutationPath: string,
-) {
+function parseEndpoint(node: ts.PropertySignature, queryPath: string, mutationPath: string) {
   if (!ts.isPropertyName(node.name)) {
     throw new Error("Invalid property name");
   }
@@ -24,30 +20,21 @@ function parseEndpoint(
       node.forEachChild((node) => {
         if (ts.isPropertySignature(node)) {
           const propertyText = node.getText();
-          if (
-            propertyText.endsWith("never;") ||
-            propertyText.startsWith("parameters:")
-          ) {
+          if (propertyText.endsWith("never;") || propertyText.startsWith("parameters:")) {
             return;
           }
 
-          const operationIdExtract = /operations\["(.+)"]/g.exec(
-            node.getText(),
-          );
+          const operationIdExtract = /operations\["(.+)"]/g.exec(node.getText());
           const operationId = operationIdExtract ? operationIdExtract[1] : null;
           const method = node.name.getText();
           const deprecated = node.getFullText().includes("@deprecated");
-
           if (method === "get") {
             const mq = makeUseQueryString(endpoint, {
               operationId,
               deprecated,
             });
             if (mq) {
-              const functionFilePath = path.join(
-                queryPath,
-                `${mq.hookName}.ts`,
-              );
+              const functionFilePath = path.join(queryPath, `${mq.hookName}.ts`);
               if (fs.existsSync(functionFilePath)) {
                 throw Error(`File already exists: ${functionFilePath}`);
               }
@@ -61,10 +48,7 @@ function parseEndpoint(
               deprecated,
             });
             if (ms) {
-              const functionFilePath = path.join(
-                mutationPath,
-                `${ms.hookName}.ts`,
-              );
+              const functionFilePath = path.join(mutationPath, `${ms.hookName}.ts`);
               if (fs.existsSync(functionFilePath)) {
                 throw Error(`File already exists: ${functionFilePath}`);
               }
@@ -79,11 +63,7 @@ function parseEndpoint(
   });
 }
 
-function parseDeclare(
-  declareString: string,
-  queryPath: string,
-  mutationPath: string,
-) {
+function parseDeclare(declareString: string, queryPath: string, mutationPath: string) {
   ts.createSourceFile(
     "test.ts",
     declareString,
