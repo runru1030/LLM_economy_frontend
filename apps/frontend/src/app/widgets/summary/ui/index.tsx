@@ -67,7 +67,7 @@ function SummaryList() {
   if (isSuccess && data?.pages.length === 0) return <>없어용</>;
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-6 w-full overflow-auto">
       {data?.pages
         .flatMap((page) => page.summaries)
         .map((summary) => (

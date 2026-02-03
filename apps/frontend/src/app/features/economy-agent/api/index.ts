@@ -1,12 +1,14 @@
-import { ChatV1EconomyEconomyAgentThreadChatPostBody } from "src/lib/api-v1/mutation/useChatV1EconomyAgentChatPostMutation";
+import { ChatV1Body } from "src/lib/api-v1/mutation/useChatV1Mutation";
 
-const ENDPOINT = "/v1/economy-agent/chat";
+const ENDPOINT = "/api/v1/economy-agent/chat";
 async function postChatStream({
   threadId,
   messages,
+  signal,
 }: {
-  threadId?: ChatV1EconomyEconomyAgentThreadChatPostBody["thread_id"];
-  messages: ChatV1EconomyEconomyAgentThreadChatPostBody["messages"];
+  threadId?: ChatV1Body["thread_id"];
+  messages: ChatV1Body["messages"];
+  signal?: AbortSignal;
 }) {
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -14,6 +16,7 @@ async function postChatStream({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ thread_id: threadId, messages }),
+    signal,
   });
   return res;
 }

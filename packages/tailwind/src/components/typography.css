@@ -130,6 +130,11 @@
 }
 
 /* caption */
+@utility caption1-regular {
+  font-size: var(--caption1-size);
+  font-weight: 400;
+  line-height: var(--caption1-line);
+}
 @utility caption1-medium {
   font-size: var(--caption1-size);
   font-weight: 500;

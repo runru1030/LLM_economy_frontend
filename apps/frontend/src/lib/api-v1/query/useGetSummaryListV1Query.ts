@@ -9,7 +9,7 @@ import { client } from "../base.client";
 import { useQuery } from "@tanstack/react-query";
 import type { FetchOptions } from "openapi-fetch";
 
-const ENDPOINT = "/v1/economy-agent/thread/{thread_id}";
+const ENDPOINT = "/api/v1/summary";
 
 type ENDPOINT = typeof ENDPOINT;
 type Path = paths[ENDPOINT];
@@ -18,28 +18,28 @@ type Api = Path[Method];
 
 type _FetchResponse = RequiredFetchResponse<ENDPOINT, Method>;
 type _FetchRequest = RequiredFetchRequest<ENDPOINT, Method>;
-export type ThreadHistoryV1EconomyAgentThreadThreadIdGetData = _FetchResponse["data"];
-export type ThreadHistoryV1EconomyAgentThreadThreadIdGetError = _FetchResponse["error"];
-export type ThreadHistoryV1EconomyAgentThreadThreadIdGetParams = _FetchRequest["params"];
-export type ThreadHistoryV1EconomyAgentThreadThreadIdGetBody = _FetchRequest["body"];
+export type GetSummaryListV1Data = _FetchResponse["data"];
+export type GetSummaryListV1Error = _FetchResponse["error"];
+export type GetSummaryListV1Params = _FetchRequest["params"];
+export type GetSummaryListV1Body = _FetchRequest["body"];
 
-export const threadHistoryV1EconomyAgentThreadThreadIdGet = async (options: FetchOptions<Api>) => {
+export const getSummaryListV1 = async (options: FetchOptions<Api>) => {
   return await client.GET(ENDPOINT, options);
 };
 
-export const threadHistoryV1EconomyAgentThreadThreadIdGetQueryKey = (
-  params?: ThreadHistoryV1EconomyAgentThreadThreadIdGetParams,
+export const getSummaryListV1QueryKey = (
+  params?: GetSummaryListV1Params,
 ): readonly unknown[] => (params ? [ENDPOINT, params] : [ENDPOINT]);
 
-export function useThreadHistoryV1EconomyAgentThreadThreadIdGetQuery(
+export function useGetSummaryListV1Query(
   { params, body, ...options }: CustomUseQueryOptions<ENDPOINT, Method>,
   fetchOptions?: Partial<FetchOptions<Api>>,
 ) {
   return useQuery({
     ...options,
-    queryKey: threadHistoryV1EconomyAgentThreadThreadIdGetQueryKey(params),
+    queryKey: getSummaryListV1QueryKey(params),
     queryFn: async ({ signal }) => {
-      const { data, error, response } = await threadHistoryV1EconomyAgentThreadThreadIdGet({
+      const { data, error, response } = await getSummaryListV1({
         params,
         signal,
         body,

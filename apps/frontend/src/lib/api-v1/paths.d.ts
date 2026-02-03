@@ -1,5 +1,5 @@
 export interface paths {
-    "/v1/summary": {
+    "/api/v1/summary": {
         parameters: {
             query?: never;
             header?: never;
@@ -7,17 +7,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get Summary List */
-        get: operations["get_summary_list_v1_summary_get"];
+        get: operations["get_summary_list_api_v1_summary_get"];
         put?: never;
-        /** Create Project */
-        post: operations["create_project_v1_summary_post"];
+        /** Create Summary List */
+        post: operations["create_summary_list_api_v1_summary_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v1/economy-agent/chat": {
+    "/api/v1/economy-agent/chat": {
         parameters: {
             query?: never;
             header?: never;
@@ -30,14 +30,14 @@ export interface paths {
          * Chat
          * @description 실시간 대화
          */
-        post: operations["chat_v1_economy_agent_chat_post"];
+        post: operations["chat_api_v1_economy_agent_chat_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v1/economy-agent/chat/{thread_id}/replay": {
+    "/api/v1/economy-agent/chat/{thread_id}/replay": {
         parameters: {
             query?: never;
             header?: never;
@@ -50,22 +50,39 @@ export interface paths {
          * Replay Thread
          * @description 실시간 대화
          */
-        post: operations["replay_thread_v1_economy_agent_chat__thread_id__replay_post"];
+        post: operations["replay_thread_api_v1_economy_agent_chat__thread_id__replay_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v1/economy-agent/thread/{thread_id}": {
+    "/api/v1/economy-agent/thread/{thread_id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Thread History */
-        get: operations["thread_history_v1_economy_agent_thread__thread_id__get"];
+        /** Get Thread History */
+        get: operations["get_thread_history_api_v1_economy_agent_thread__thread_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/economy-agent/threads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Threads */
+        get: operations["get_threads_api_v1_economy_agent_threads_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -178,22 +195,38 @@ export interface components {
         };
         /** ThreadHistoryResponse */
         ThreadHistoryResponse: {
-            /**
-             * Thread Id
-             * Format: uuid
-             */
-            thread_id: string;
+            metadata: components["schemas"]["ThreadMetadata"];
             /** Messages */
             messages: components["schemas"]["ThreadMessage"][];
         };
         /** ThreadMessage */
         ThreadMessage: {
             /** Id */
-            id: string | null;
+            id: string;
             /** Role */
             role: string;
             /** Content */
             content: components["schemas"]["TextMessage"][];
+        };
+        /** ThreadMetadata */
+        ThreadMetadata: {
+            /**
+             * Thread Id
+             * Format: uuid
+             */
+            thread_id: string;
+            /** Subject */
+            subject: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /** ThreadRequest */
         ThreadRequest: {
@@ -240,7 +273,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    get_summary_list_v1_summary_get: {
+    get_summary_list_api_v1_summary_get: {
         parameters: {
             query?: {
                 /** @description 페이지 당 데이터 개수 */
@@ -278,7 +311,7 @@ export interface operations {
             };
         };
     };
-    create_project_v1_summary_post: {
+    create_summary_list_api_v1_summary_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -311,7 +344,7 @@ export interface operations {
             };
         };
     };
-    chat_v1_economy_agent_chat_post: {
+    chat_api_v1_economy_agent_chat_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -344,7 +377,7 @@ export interface operations {
             };
         };
     };
-    replay_thread_v1_economy_agent_chat__thread_id__replay_post: {
+    replay_thread_api_v1_economy_agent_chat__thread_id__replay_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -379,7 +412,7 @@ export interface operations {
             };
         };
     };
-    thread_history_v1_economy_agent_thread__thread_id__get: {
+    get_thread_history_api_v1_economy_agent_thread__thread_id__get: {
         parameters: {
             query?: never;
             header?: never;
@@ -406,6 +439,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_threads_api_v1_economy_agent_threads_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ThreadMetadata"][];
                 };
             };
         };

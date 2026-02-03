@@ -4,7 +4,7 @@ import ThreadPage from "src/app/_pages/thread";
 export default async function Page() {
   return (
     <EconomyAgentThreadStoreProvider>
-      <ThreadPage threadId={null} />;
+      <ThreadPage threadId={null} />
     </EconomyAgentThreadStoreProvider>
   );
 }

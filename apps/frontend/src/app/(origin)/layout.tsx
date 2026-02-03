@@ -1,10 +1,6 @@
-function Header() {
-  return (
-    <div className="h-15 flex items-center sticky top-0 left-0 px-4 bg-white border-b border-gray-100  font-extralight">
-      LLM economy
-    </div>
-  );
-}
+import Header from "@widgets/common/ui/header";
+import FloatingNav from "@widgets/common/ui/floating-nav";
+import React from "react";
 
 export default function Layout({
   children,
@@ -14,7 +10,8 @@ export default function Layout({
   return (
     <main>
       <Header />
-      <div className="max-w-120 mx-auto h-[calc(100vh-60px)]">{children}</div>
+      <div className="max-w-120 mx-auto h-[calc(100vh-48px)] overflow-auto">{children}</div>
+      <FloatingNav />
     </main>
   );
 }

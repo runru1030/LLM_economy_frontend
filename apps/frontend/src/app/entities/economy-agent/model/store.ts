@@ -16,6 +16,7 @@ interface States {
 
 interface Actions {
   appendMessage(msg: MessageResponse): void;
+  rollbackMessage(): void;
   updateMessageByChunk(chunk: unknown): void;
   setIsSending(loading: boolean): void;
 }
@@ -44,6 +45,13 @@ export const createEconomyAgentThreadStore = (initialData?: APIThreadDetailRespo
 
           const newMessages = [...messages, message];
           state.messages = newMessages;
+        });
+      },
+      rollbackMessage: () => {
+        set((state) => {
+          state.messages?.pop();
+          state.isSending = false;
+          state.isPending = false;
         });
       },
       setIsSending: (loading: boolean) => {

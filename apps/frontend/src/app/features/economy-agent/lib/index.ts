@@ -43,6 +43,8 @@ async function fetchWithSSE({
       }
     }
   } catch (error) {
+    if ((error as { name: string })?.name === "AbortError") return;
+
     console.error("Message send error:", error);
     onError?.(error);
   } finally {
