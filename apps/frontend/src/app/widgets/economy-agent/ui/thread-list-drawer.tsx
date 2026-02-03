@@ -2,7 +2,6 @@
 import ThreadList, { NewThreadButton } from "@features/economy-agent/ui/thread-list";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
@@ -17,28 +16,29 @@ export default function ThreadListDrawer({ threadId }: { threadId: string | null
   const [open, setOpen] = useState(false);
   const query = useGetThreadList({ enabled: open });
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Drawer direction="left" open={open} onOpenChange={setOpen}>
+    <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger>
-        <MdMenu />
+        <MdMenu size={18} />
       </DrawerTrigger>
       <DrawerContent className="p-3">
         <DrawerHeader className="p-0">
           <DrawerTitle className="hidden" />
           <DrawerDescription className="hidden" />
-          <DrawerClose className="self-end">
-            <NewThreadButton />
-          </DrawerClose>
+          <NewThreadButton onClick={handleClose} />
         </DrawerHeader>
         <ThreadList.ListContainer>
           {query.data?.map((thread) => (
-            <DrawerClose className="w-full" key={thread.thread_id}>
-              <ThreadList.Item
-                current={threadId === thread.thread_id}
-                subject={thread.subject}
-                threadId={thread.thread_id}
-              />
-            </DrawerClose>
+            <ThreadList.Item
+              key={thread.thread_id}
+              current={threadId === thread.thread_id}
+              subject={thread.subject}
+              threadId={thread.thread_id}
+              onClick={handleClose}
+            />
           ))}
         </ThreadList.ListContainer>
       </DrawerContent>

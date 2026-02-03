@@ -7,7 +7,7 @@ function NewThreadButton({ onClick }: { onClick?: () => void }) {
   return (
     <Link
       href="/economy-agent"
-      className="border-gray-200 rounded-full p-1 flex items-center gap-1 body3-regular text-gray-800 border size-8 justify-center"
+      className="border-gray-200 rounded-full p-1 flex items-center gap-1 body3-regular text-gray-800 border size-8 justify-center self-end"
       onClick={onClick}
     >
       <MdEditNote size={20} />
@@ -34,7 +34,7 @@ function Item({
   );
 }
 function ListContainer({ children }: PropsWithChildren<any>) {
-  return <div className="py-1 flex flex-col gap-1 overflow-auto">{children}</div>;
+  return <div className="py-2 flex flex-col gap-1 overflow-auto">{children}</div>;
 }
 const ThreadList = { Item, ListContainer };
 export default ThreadList;

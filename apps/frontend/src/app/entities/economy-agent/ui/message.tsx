@@ -12,7 +12,7 @@ function AIMessageText({
   className?: string;
 }) {
   return (
-    <div className={clsx(className, "py-1")}>
+    <div className={clsx(className, "py-1 ")}>
       <MarkdownItem content={getMessageContent(message)} />
     </div>
   );
@@ -25,7 +25,7 @@ function MessageText({
   className?: string;
 }) {
   return (
-    <div className={clsx(className, "py-1.5 px-3 whitespace-pre-wrap body3-regular")}>
+    <div className={clsx(className, "py-1.5 px-3 whitespace-pre-wrap caption1-regular")}>
       <p>{getMessageContent(message)}</p>
     </div>
   );

@@ -134,8 +134,8 @@ function MessageInput({
   return (
     <textarea
       name={INPUT_NAME}
-      placeholder={"메시지 입력"}
-      className="max-h-50 min-h-10 w-full flex-1 resize-none overflow-auto pr-12 focus:outline-none bg-gray-bg-200 rounded-3xl py-2 text-sm px-3 "
+      placeholder={"무엇이든 물어보세요"}
+      className="max-h-50 min-h-8 w-full flex-1 resize-none overflow-auto pr-12 focus:outline-none bg-gray-bg-200 rounded-3xl py-2 caption1-regular px-3 "
       rows={1}
       aria-label="Message input"
       disabled={disabled}
@@ -149,7 +149,7 @@ function MessageSendButton({ disabled, isSending }: { disabled?: boolean; isSend
     <button
       disabled={disabled}
       className={clsx(
-        "flex size-8 cursor-pointer items-center justify-center rounded-full p-0 absolute right-2 bottom-1",
+        "flex size-6.5 cursor-pointer items-center justify-center rounded-full p-0 absolute right-1 bottom-1",
         "bg-gray-800 text-white",
       )}
       aria-label="Send message"

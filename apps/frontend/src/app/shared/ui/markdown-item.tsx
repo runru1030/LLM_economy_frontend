@@ -20,6 +20,7 @@ export default function MarkdownItem(props: Props) {
       }}
       rehypePlugins={[rehypeKatex]}
       components={{
+        ol: (props) => <ol className="pl-4!" {...props} />,
         ul: (props) => <ul className="pl-4! list-disc" {...props} />,
         hr: (props) => <hr className="h-px! border-none! bg-gray-300!" {...props} />,
         h2: (props) => <h2 className="border-none!" {...props} />,
