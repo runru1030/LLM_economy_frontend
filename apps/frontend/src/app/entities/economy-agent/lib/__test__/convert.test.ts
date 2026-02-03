@@ -6,7 +6,12 @@ import { MessageType } from "@entities/economy-agent/constants";
 describe("convertThreadDetailApiToClient", () => {
   it("API 응답을 client thread detail 구조로 변환한다", () => {
     const apiResponse: APIThreadDetailResponse = {
-      thread_id: "thread-123",
+      metadata: {
+        thread_id: "thread-123",
+        created_at: "2023-01-01T00:00:00Z",
+        updated_at: "2023-01-01T00:00:00Z",
+        subject: "",
+      },
       messages: [
         {
           id: "msg-1",
@@ -51,7 +56,7 @@ describe("convertThreadDetailApiToClient", () => {
 
   it("assistant가 아닌 role은 HUMAN으로 매핑된다", () => {
     const apiResponse: APIThreadDetailResponse = {
-      thread_id: "thread-456",
+      metadata: { thread_id: "thread-123", created_at: "", updated_at: "", subject: "" },
       messages: [
         {
           id: "msg-3",
@@ -68,7 +73,7 @@ describe("convertThreadDetailApiToClient", () => {
 
   it("message id가 없으면 빈 문자열로 처리한다", () => {
     const apiResponse: APIThreadDetailResponse = {
-      thread_id: "thread-789",
+      metadata: { thread_id: "thread-123", created_at: "", updated_at: "", subject: "" },
       messages: [
         {
           id: "",
