@@ -1,11 +1,11 @@
 import { components } from "src/lib/api-v1/paths";
 import { MessageType } from "../constants";
-import { ThreadHistoryV1EconomyAgentThreadThreadIdGetData } from "src/lib/api-v1/query/useThreadHistoryV1EconomyAgentThreadThreadIdGetQuery";
+import { GetThreadHistoryV1Data } from "src/lib/api-v1/query/useGetThreadHistoryV1Query";
 
 // api
 
 type APIThreadResponse = components["schemas"]["ThreadResponse"];
-type APIThreadDetailResponse = ThreadHistoryV1EconomyAgentThreadThreadIdGetData;
+type APIThreadDetailResponse = GetThreadHistoryV1Data;
 
 // client types
 interface MessageRequest {
