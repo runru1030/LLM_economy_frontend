@@ -144,10 +144,24 @@ function MessageInput({
     />
   );
 }
-function MessageSendButton({ disabled, isSending }: { disabled?: boolean; isSending: boolean }) {
+function MessageStopButton({ handleStop }: { handleStop: () => void }) {
   return (
     <button
-      disabled={disabled}
+      className={clsx(
+        "flex size-6.5 cursor-pointer items-center justify-center rounded-full p-0 absolute right-1 bottom-1",
+        "bg-gray-800 text-white",
+      )}
+      aria-label="Send message"
+      type="button"
+      onClick={handleStop}
+    >
+      <MdStop className="size-4" />
+    </button>
+  );
+}
+function MessageSendButton() {
+  return (
+    <button
       className={clsx(
         "flex size-6.5 cursor-pointer items-center justify-center rounded-full p-0 absolute right-1 bottom-1",
         "bg-gray-800 text-white",
@@ -155,12 +169,13 @@ function MessageSendButton({ disabled, isSending }: { disabled?: boolean; isSend
       aria-label="Send message"
       type="submit"
     >
-      {isSending ? <MdStop className="size-4" /> : <MdArrowUpward className="size-4" />}
+      <MdArrowUpward className="size-4" />
     </button>
   );
 }
 function MessageInputForm() {
   const formRef = useRef<HTMLFormElement>(null);
+  const controllerRef = useRef<AbortController>(null);
 
   const threadId = useEconomyAgentThreadStore((state) => state.threadId);
   const [isSending, setIsSending] = useEconomyAgentThreadStore(
@@ -168,6 +183,7 @@ function MessageInputForm() {
   );
   const updateMessageByChunk = useEconomyAgentThreadStore((state) => state.updateMessageByChunk);
   const appendMessage = useEconomyAgentThreadStore((state) => state.appendMessage);
+  const rollbackMessage = useEconomyAgentThreadStore((state) => state.rollbackMessage);
 
   const handleSubmit = async () => {
     const form = formRef.current;
@@ -177,11 +193,13 @@ function MessageInputForm() {
     const message = textarea?.value.trim();
     if (!message) return;
 
+    controllerRef.current = new AbortController();
     await fetchWithSSE({
       fetchFn: () =>
         postChatStream({
           threadId,
           messages: [{ type: "text", text: message }],
+          signal: controllerRef.current?.signal,
         }),
       onStart: () => {
         appendMessage({
@@ -204,6 +222,13 @@ function MessageInputForm() {
     });
   };
 
+  const handleStop = () => {
+    if (!controllerRef.current) return;
+
+    controllerRef.current.abort();
+    rollbackMessage();
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -215,7 +240,7 @@ function MessageInputForm() {
     >
       <div className="flex gap-2 relative">
         <MessageInput disabled={isSending} onEnter={handleSubmit} />
-        <MessageSendButton disabled={isSending} isSending={isSending} />
+        {isSending ? <MessageStopButton handleStop={handleStop} /> : <MessageSendButton />}
       </div>
     </form>
   );

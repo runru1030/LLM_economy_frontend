@@ -4,9 +4,11 @@ const ENDPOINT = "/api/v1/economy-agent/chat";
 async function postChatStream({
   threadId,
   messages,
+  signal,
 }: {
   threadId?: ChatV1Body["thread_id"];
   messages: ChatV1Body["messages"];
+  signal?: AbortSignal;
 }) {
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -14,6 +16,7 @@ async function postChatStream({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ thread_id: threadId, messages }),
+    signal,
   });
   return res;
 }
