@@ -17,10 +17,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 # 빌드
 FROM deps AS build
 
-ARG ENV_FILE
-ARG NEXT_PROXY_API_URL
-ENV NEXT_PROXY_API_URL=$NEXT_PROXY_API_URL
-
 ENV NODE_ENV="production"
 ENV NEXT_TELEMETRY_DISABLED=1
 
